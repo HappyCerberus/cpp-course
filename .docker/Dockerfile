@@ -4,9 +4,9 @@ RUN set -ex && \
     apt-get update && \
     apt-get install -y gpg git lsb-release wget software-properties-common
 
-RUN wget https://go.dev/dl/go1.19.3.linux-amd64.tar.gz && \
-    tar -xf go1.19.3.linux-amd64.tar.gz -C /usr/local && \
-    rm go1.19.3.linux-amd64.tar.gz
+RUN wget https://go.dev/dl/go1.19.3.linux-${TARGETARCH}.tar.gz && \
+    tar -xf go1.19.3.linux-${TARGETARCH}.tar.gz -C /usr/local && \
+    rm go1.19.3.linux-${TARGETARCH}.tar.gz
 
 ENV PATH="${PATH}:/usr/local/go/bin"
 
