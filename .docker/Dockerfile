@@ -1,4 +1,5 @@
 FROM ubuntu:22.04
+ARG TARGETARCH
 
 RUN set -ex && \
     apt-get update && \
