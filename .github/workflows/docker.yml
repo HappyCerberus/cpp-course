@@ -2,6 +2,9 @@ name: Build docker image
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - '*'
 
 jobs:
   build_and_push_docker_image:
@@ -10,6 +13,14 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 'Get latest version tag'
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: 1.0.0 # Optional fallback tag to use when no tag can be found
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -38,6 +49,6 @@ jobs:
           push: true
           tags: |
             happycerberus/cpp-course:latest
-            happycerberus/cpp-course:1.0.0
+            happycerberus/cpp-course:${{ steps.previoustag.outputs.tag }}
             ghcr.io/happycerberus/cpp-course:latest
-            ghcr.io/happycerberus/cpp-course:1.0.0
+            ghcr.io/happycerberus/cpp-course:${{ steps.previoustag.outputs.tag }}
