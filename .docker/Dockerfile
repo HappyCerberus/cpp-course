@@ -1,13 +1,13 @@
-FROM ubuntu:22.04
+FROM gcc:12.2
 ARG TARGETARCH
 
 RUN set -ex && \
     apt-get update && \
     apt-get install -y gpg git lsb-release wget software-properties-common
 
-RUN wget https://go.dev/dl/go1.19.3.linux-${TARGETARCH}.tar.gz && \
-    tar -xf go1.19.3.linux-${TARGETARCH}.tar.gz -C /usr/local && \
-    rm go1.19.3.linux-${TARGETARCH}.tar.gz
+RUN wget https://go.dev/dl/go1.20.1.linux-${TARGETARCH}.tar.gz && \
+    tar -xf go1.20.1.linux-${TARGETARCH}.tar.gz -C /usr/local && \
+    rm go1.20.1.linux-${TARGETARCH}.tar.gz
 
 ENV PATH="${PATH}:/usr/local/go/bin"
 
