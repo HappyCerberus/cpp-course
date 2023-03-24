@@ -5,6 +5,14 @@ RUN set -ex && \
     apt-get update && \
     apt-get install -y gpg git lsb-release wget software-properties-common
 
+ENV CC=/usr/local/bin/gcc
+
+RUN wget https://ftp.gnu.org/gnu/gdb/gdb-13.1.tar.gz && \
+	tar -xf gdb-13.1.tar.gz -C /tmp && rm gdb-13.1.tar.gz && \
+	cd /tmp/gdb-13.1 && \
+	./configure --prefix=/usr/local && make && make install && \
+	rm -rf /tmp/gdb-13.1
+
 RUN wget https://go.dev/dl/go1.20.1.linux-${TARGETARCH}.tar.gz && \
     tar -xf go1.20.1.linux-${TARGETARCH}.tar.gz -C /usr/local && \
     rm go1.20.1.linux-${TARGETARCH}.tar.gz
