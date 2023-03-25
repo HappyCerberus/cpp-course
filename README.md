@@ -1,6 +1,6 @@
 # Simple C++ with Bazel docker image
 
-This repository contains a Dockerfile and the corresponding GitHub action to build a docker image that contains GCC, Clang (with tools) and Bazel.
+This repository contains a Dockerfile and the corresponding GitHub action to build a docker image that contains GCC, Clang (with tools), GDB and Bazel.
 
 The resulting image is registered both on GitHub and DockerHub:
 
