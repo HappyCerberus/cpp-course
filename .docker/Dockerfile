@@ -1,4 +1,4 @@
-FROM gcc:12.2
+FROM gcc:13.1
 ARG TARGETARCH
 
 RUN set -ex && \
@@ -13,9 +13,9 @@ RUN wget https://ftp.gnu.org/gnu/gdb/gdb-13.1.tar.gz && \
 	./configure --prefix=/usr/local && make && make install && \
 	rm -rf /tmp/gdb-13.1
 
-RUN wget https://go.dev/dl/go1.20.1.linux-${TARGETARCH}.tar.gz && \
-    tar -xf go1.20.1.linux-${TARGETARCH}.tar.gz -C /usr/local && \
-    rm go1.20.1.linux-${TARGETARCH}.tar.gz
+RUN wget https://go.dev/dl/go1.20.3.linux-${TARGETARCH}.tar.gz && \
+    tar -xf go1.20.3.linux-${TARGETARCH}.tar.gz -C /usr/local && \
+    rm go1.20.3.linux-${TARGETARCH}.tar.gz
 
 ENV PATH="${PATH}:/usr/local/go/bin"
 
@@ -24,6 +24,12 @@ RUN set -ex && \
     GOBIN=/usr/local/go/bin go install github.com/bazelbuild/buildtools/buildifier@latest && \
     ln -s /usr/local/go/bin/bazelisk /usr/local/bin/bazel
 
-RUN wget https://apt.llvm.org/llvm.sh &&\
-	chmod +x llvm.sh && \
-	./llvm.sh 16 all
+RUN set -ex &&\
+    wget https://apt.llvm.org/llvm.sh &&\
+    chmod +x llvm.sh &&\
+    ./llvm.sh 16 all || echo ""
+
+# For whatever reason we have to manually update and run the llvm script again.
+RUN set -ex &&\
+    apt-get update &&\
+    ./llvm.sh 16 all
